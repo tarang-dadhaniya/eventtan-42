@@ -964,12 +964,12 @@ const EVENT_OVERVIEW_ICON = `<svg width="22" height="22" viewBox="0 0 22 22" fil
                 class="bg-white rounded shadow-md border border-[#E9E9E9] p-4 md:p-6 lg:p-8"
               >
                 <!-- Available Label -->
-                <h3 class="text-base font-medium text-[#686868] mb-6">
+                <h3 class="text-base font-medium text-[#686868] mb-3">
                   Available
                 </h3>
 
                 <!-- Features Grid -->
-                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-8 gap-4 md:gap-6 mb-4">
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-8 gap-4 md:gap-6 mb-6">
                   <!-- Schedule - Active -->
                   <button
                     (click)="toggleFeature('schedule')"
@@ -1100,7 +1100,7 @@ const EVENT_OVERVIEW_ICON = `<svg width="22" height="22" viewBox="0 0 22 22" fil
 
                 <!-- Selected Section -->
                 <div class="mb-8">
-                  <h3 class="text-base font-medium text-[#686868] mb-6">
+                  <h3 class="text-base font-medium text-[#686868] mb-3">
                     Selected
                   </h3>
 

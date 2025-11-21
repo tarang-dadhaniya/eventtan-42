@@ -1673,4 +1673,71 @@ export class EventSetupComponent implements OnInit {
     const feature = this.inactiveFeatures.find((f) => f.id === featureId);
     return feature ? feature.label : "";
   }
+
+  onDragStartFeature(event: DragEvent, featureId: string) {
+    this.draggedFeatureId = featureId;
+    if (event.dataTransfer) {
+      event.dataTransfer.effectAllowed = "move";
+      event.dataTransfer.setData("featureId", featureId);
+    }
+  }
+
+  onDragEndFeature(event: DragEvent) {
+    this.draggedFeatureId = null;
+  }
+
+  onDragOverSelected(event: DragEvent) {
+    event.preventDefault();
+    if (event.dataTransfer) {
+      event.dataTransfer.dropEffect = "move";
+    }
+    this.isDragOverSelected = true;
+  }
+
+  onDragLeaveSelected(event: DragEvent) {
+    const target = event.currentTarget as HTMLElement;
+    if (event.relatedTarget === null || !target.contains(event.relatedTarget as Node)) {
+      this.isDragOverSelected = false;
+    }
+  }
+
+  onDropSelected(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragOverSelected = false;
+
+    if (event.dataTransfer) {
+      const featureId = event.dataTransfer.getData("featureId");
+      if (featureId && !this.activeFeatures.includes(featureId)) {
+        this.activeFeatures.push(featureId);
+      }
+    }
+  }
+
+  onDragStart(event: DragEvent, featureId: string) {
+    this.draggedFeatureId = featureId;
+    if (event.dataTransfer) {
+      event.dataTransfer.effectAllowed = "move";
+      event.dataTransfer.setData("featureId", featureId);
+    }
+  }
+
+  onDragEnd(event: DragEvent) {
+    this.draggedFeatureId = null;
+  }
+
+  onDragOver(event: DragEvent) {
+    event.preventDefault();
+    if (event.dataTransfer) {
+      event.dataTransfer.dropEffect = "move";
+    }
+  }
+
+  onDragLeave(event: DragEvent) {
+  }
+
+  onDrop(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
 }

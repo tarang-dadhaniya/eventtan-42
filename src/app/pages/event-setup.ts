@@ -1125,10 +1125,7 @@ const EVENT_OVERVIEW_ICON = `<svg width="22" height="22" viewBox="0 0 22 22" fil
                   >
                     <!-- Selected Feature Cards -->
                     <div
-                      class="flex flex-wrap gap-6"
-                      (dragover)="onDragOver($event)"
-                      (drop)="onDrop($event)"
-                      (dragleave)="onDragLeave($event)"
+                      class="flex flex-wrap gap-6 w-full"
                     >
                       <div
                         *ngFor="let featureId of activeFeatures"

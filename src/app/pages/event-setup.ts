@@ -2364,6 +2364,9 @@ export class EventSetupComponent implements OnInit {
     if (featureId === "schedule") {
       return "Schedule";
     }
+    if (featureId === "exhibitor") {
+      return "Exhibitor";
+    }
     const feature = this.inactiveFeatures.find((f) => f.id === featureId);
     return feature ? feature.label : "";
   }

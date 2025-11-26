@@ -2440,6 +2440,15 @@ const EVENT_OVERVIEW_ICON = `<svg width="22" height="22" viewBox="0 0 22 22" fil
       (close)="editAboutContent = false"
       (save)="onAboutSave($event)"
     ></app-about-detail-modal>
+
+    <!-- Add Information Modal -->
+    <app-add-information-modal
+      [isOpen]="isInformationModalOpen"
+      [editMode]="editModeInformation"
+      [informationData]="editingInformation"
+      (close)="closeInformationModal()"
+      (save)="onInformationSave($event)"
+    ></app-add-information-modal>
   `,
   styles: [
     `

@@ -2510,7 +2510,11 @@ export class EventSetupComponent implements OnInit {
     if (this.currentTab === "features") {
       this.currentTab = "details";
     } else if (this.currentTab === "content") {
-      this.currentTab = "features";
+      if (this.selectedFeatureIndex > 0) {
+        this.selectedFeatureIndex--;
+      } else {
+        this.currentTab = "features";
+      }
     }
   }
 

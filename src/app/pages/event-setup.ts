@@ -2270,6 +2270,135 @@ const EVENT_OVERVIEW_ICON = `<svg width="22" height="22" viewBox="0 0 22 22" fil
                     </div>
                   </div>
 
+                  <!-- Speakers Content -->
+                  <div
+                    *ngIf="
+                      activeFeatures.length > 0 &&
+                      activeFeatures[selectedFeatureIndex] === 'speakers'
+                    "
+                    class="w-full"
+                  >
+                    <!-- Speakers Table Container -->
+                    <div class="border border-[#CED4DA] rounded bg-white">
+                      <!-- Header -->
+                      <div
+                        class="px-7 py-5 border-b border-[#CED4DA] bg-[#F5F5F5] rounded-t flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3"
+                      >
+                        <h2
+                          class="text-lg sm:text-xl text-[#686868] font-medium"
+                        >
+                          Speakers
+                        </h2>
+
+                        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
+                          <!-- Search Bar -->
+                          <div class="relative w-full sm:w-[328px]">
+                            <input
+                              type="text"
+                              placeholder="Search"
+                              class="w-full h-11 px-5 pr-12 border border-[#DADADA] rounded bg-[#FBFBFB] text-base text-[#212529] placeholder-[#878A99] focus:outline-none focus:border-[#049AD0] transition-colors"
+                            />
+                            <svg
+                              class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none"
+                              width="22"
+                              height="22"
+                              viewBox="0 0 22 22"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                opacity="0.4"
+                                fill-rule="evenodd"
+                                clip-rule="evenodd"
+                                d="M19.2197 19.2197C18.9268 19.5126 18.4519 19.5126 18.159 19.2197L15.428 16.4886C15.1351 16.1958 15.1351 15.7209 15.428 15.428C15.7209 15.1351 16.1958 15.1351 16.4886 15.428L19.2197 18.159C19.5126 18.4519 19.5126 18.9268 19.2197 19.2197Z"
+                                fill="#B1B1B1"
+                              />
+                              <path
+                                fill-rule="evenodd"
+                                clip-rule="evenodd"
+                                d="M9 1.5C4.85786 1.5 1.5 4.85786 1.5 9C1.5 13.1421 4.85786 16.5 9 16.5C13.1421 16.5 16.5 13.1421 16.5 9C16.5 4.85786 13.1421 1.5 9 1.5ZM0 9C0 4.02944 4.02944 0 9 0C13.9706 0 18 4.02944 18 9C18 13.9706 13.9706 18 9 18C4.02944 18 0 13.9706 0 9Z"
+                                fill="#B1B1B1"
+                              />
+                            </svg>
+                          </div>
+
+                          <!-- Add Speakers Button -->
+                          <button
+                            class="h-11 px-4 bg-[#049AD0] hover:bg-[#0385b5] rounded border border-[#049AD0] text-white font-semibold text-base flex items-center justify-center gap-2 transition-colors whitespace-nowrap"
+                          >
+                            <svg
+                              width="24"
+                              height="24"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M12 5V19"
+                                stroke="white"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              />
+                              <path
+                                d="M5 12H19"
+                                stroke="white"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              />
+                            </svg>
+                            <span>Add Speakers</span>
+                          </button>
+                        </div>
+                      </div>
+
+                      <!-- Table Header -->
+                      <div
+                        class="px-7 py-5 border-b border-[#CED4DA] bg-white hidden md:grid grid-cols-[60px_1fr_200px_200px_120px] gap-4"
+                      >
+                        <div class="text-base font-semibold text-[#181C32] text-center">
+                          Sr. No
+                        </div>
+                        <div class="text-base font-semibold text-[#181C32]">
+                          Name
+                        </div>
+                        <div class="text-base font-semibold text-[#181C32]">
+                          Company
+                        </div>
+                        <div class="text-base font-semibold text-[#181C32]">
+                          Position
+                        </div>
+                        <div class="text-base font-semibold text-[#181C32]">
+                          Action
+                        </div>
+                      </div>
+
+                      <!-- Empty State -->
+                      <div class="py-20 flex flex-col items-center justify-center">
+                        <svg
+                          class="mb-6"
+                          width="80"
+                          height="80"
+                          viewBox="0 0 32 32"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M27.9361 12.6196L17.3324 2.01581C16.2362 0.919565 14.4523 0.919502 13.356 2.01581C12.3705 3.00125 12.2856 4.50418 13.0134 5.57737L12.9986 5.65118C12.2341 9.47399 10.3729 12.9517 7.61613 15.7085L2.75245 20.5722C1.65357 21.6711 1.65339 23.4496 2.75245 24.5485L5.40332 27.1994C6.50213 28.2983 8.28075 28.2983 9.37968 27.1994L10.0424 26.5366L14.6815 31.1758C15.7804 32.2747 17.5589 32.2748 18.6579 31.1758C19.7542 30.0795 19.7542 28.2957 18.6579 27.1995L16.6697 25.2113L17.3324 24.5485C18.4313 23.4497 18.4314 21.6712 17.3324 20.5722L16.882 20.1218C19.0976 18.5706 21.6138 17.4907 24.3008 16.9532L24.3756 16.9383C25.4727 17.679 26.9721 17.5599 27.9361 16.5958H27.9362C29.0323 15.4997 29.0323 13.7159 27.9361 12.6196ZM8.05425 25.874C7.688 26.2401 7.095 26.2402 6.72875 25.8739L4.07788 23.223C3.71157 22.8566 3.71157 22.2639 4.07788 21.8976L8.71694 17.2585L12.6933 21.2348C12.2394 21.6887 8.51931 25.4088 8.05425 25.874ZM17.3324 28.5248C17.6977 28.8902 17.6977 29.4848 17.3324 29.8503C16.967 30.2156 16.3723 30.2156 16.0069 29.8503L11.3678 25.2111L12.6933 23.8857L17.3324 28.5248ZM14.0187 22.5603C14.3005 22.2785 14.7222 21.847 15.3879 21.2785L16.0069 21.8976C16.3732 22.2639 16.3732 22.8566 16.0069 23.223L15.3442 23.8858L14.0187 22.5603ZM14.0586 19.9493L10.0024 15.8932C12.1761 13.3832 13.7327 10.4204 14.5655 7.20168L22.75 15.3862C19.5313 16.2189 16.5685 17.7755 14.0586 19.9493ZM26.610 15.2703C26.2435 15.6368 25.6489 15.6368 25.2824 15.2703L14.0805 4.06843C13.714 3.70193 13.714 3.10731 14.0805 2.74081C14.447 2.37431 15.0416 2.37431 15.4081 2.74081L26.610 13.9427C26.9765 14.3092 26.9765 14.9038 26.610 15.2703Z"
+                            fill="#D0D0D0"
+                          />
+                        </svg>
+                        <h3 class="text-xl sm:text-2xl font-semibold text-[#878A99] mb-2">
+                          No Speakers Added Yet
+                        </h3>
+                        <p class="text-sm sm:text-base text-[#686868] text-center max-w-md px-4">
+                          Click "Add Speakers" button to add speakers to your event
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
                   <!-- Other Features Placeholder -->
                   <div
                     *ngIf="
@@ -2277,7 +2406,8 @@ const EVENT_OVERVIEW_ICON = `<svg width="22" height="22" viewBox="0 0 22 22" fil
                       activeFeatures[selectedFeatureIndex] !== 'schedule' &&
                       activeFeatures[selectedFeatureIndex] !== 'exhibitor' &&
                       activeFeatures[selectedFeatureIndex] !== 'about' &&
-                      activeFeatures[selectedFeatureIndex] !== 'information'
+                      activeFeatures[selectedFeatureIndex] !== 'information' &&
+                      activeFeatures[selectedFeatureIndex] !== 'speakers'
                     "
                     class="flex flex-col items-center justify-center py-16 text-center"
                   >

@@ -10,11 +10,13 @@ import {
 } from "../components/event-detail-sidebar";
 import { AddScheduleModalComponent } from "../components/add-schedule-modal";
 import { AddExhibitorModalComponent } from "../components/add-exhibitor-modal";
+import { AddSpeakersModalComponent } from "../components/add-speakers-modal";
 import { ConfirmDeleteModalComponent } from "../components/confirm-delete-modal";
 import { AboutDetailModalComponent } from "../components/about-detail-modal";
 import { AddInformationModalComponent } from "../components/add-information-modal";
 import { ScheduleService, Schedule } from "../services/schedule.service";
 import { ExhibitorService, Exhibitor } from "../services/exhibitor.service";
+import { SpeakerService, Speaker } from "../services/speaker.service";
 import {
   InformationService,
   Information,
@@ -35,6 +37,7 @@ const EVENT_OVERVIEW_ICON = `<svg width="22" height="22" viewBox="0 0 22 22" fil
     FormsModule,
     AddScheduleModalComponent,
     AddExhibitorModalComponent,
+    AddSpeakersModalComponent,
     ConfirmDeleteModalComponent,
     AboutDetailModalComponent,
     AddInformationModalComponent,
@@ -2326,6 +2329,7 @@ const EVENT_OVERVIEW_ICON = `<svg width="22" height="22" viewBox="0 0 22 22" fil
 
                           <!-- Add Speakers Button -->
                           <button
+                            (click)="openAddSpeakersModal()"
                             class="h-11 px-4 bg-[#049AD0] hover:bg-[#0385b5] rounded border border-[#049AD0] text-white font-semibold text-base flex items-center justify-center gap-2 transition-colors whitespace-nowrap"
                           >
                             <svg
@@ -2601,6 +2605,15 @@ const EVENT_OVERVIEW_ICON = `<svg width="22" height="22" viewBox="0 0 22 22" fil
       (close)="closeInformationModal()"
       (save)="onInformationSave($event)"
     ></app-add-information-modal>
+
+    <!-- Add Speakers Modal -->
+    <app-add-speakers-modal
+      [isOpen]="isAddSpeakersModalOpen"
+      [editMode]="editModeSpeaker"
+      [speakerData]="editingSpeaker"
+      (close)="closeAddSpeakersModal()"
+      (save)="onSpeakerSave($event)"
+    ></app-add-speakers-modal>
   `,
   styles: [
     `
@@ -2648,22 +2661,27 @@ export class EventSetupComponent implements OnInit {
 
   isScheduleModalOpen = false;
   isExhibitorModalOpen = false;
+  isAddSpeakersModalOpen = false;
   isInformationModalOpen = false;
   editAboutContent = false;
   eventId: string = "";
   schedules: Schedule[] = [];
   exhibitors: Exhibitor[] = [];
+  speakers: Speaker[] = [];
   information: Information[] = [];
   searchQuery: string = "";
   editMode = false;
   editModeExhibitor = false;
+  editModeSpeaker = false;
   editModeInformation = false;
   editingSchedule: any = null;
   editingExhibitor: any = null;
+  editingSpeaker: any = null;
   editingInformation: any = null;
   isDeleteModalOpen = false;
   scheduleToDelete: string | null = null;
   exhibitorToDelete: string | null = null;
+  speakerToDelete: string | null = null;
   informationToDelete: string | null = null;
   aboutTitle: string = "About ENGIMACH 2023";
   aboutDescription: string =
@@ -2825,6 +2843,7 @@ export class EventSetupComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private scheduleService: ScheduleService,
     private exhibitorService: ExhibitorService,
+    private speakerService: SpeakerService,
     private informationService: InformationService,
   ) {}
 
@@ -2843,6 +2862,7 @@ export class EventSetupComponent implements OnInit {
 
     this.loadSchedules();
     this.loadExhibitors();
+    this.loadSpeakers();
     this.loadInformation();
 
     this.updateActiveRoute();
@@ -3174,6 +3194,9 @@ export class EventSetupComponent implements OnInit {
     } else if (this.exhibitorToDelete) {
       this.exhibitorService.deleteExhibitor(this.exhibitorToDelete);
       this.loadExhibitors();
+    } else if (this.speakerToDelete) {
+      this.speakerService.deleteSpeaker(this.speakerToDelete);
+      this.loadSpeakers();
     } else if (this.informationToDelete) {
       this.informationService.deleteInformation(this.informationToDelete);
       this.loadInformation();
@@ -3185,6 +3208,7 @@ export class EventSetupComponent implements OnInit {
     this.isDeleteModalOpen = false;
     this.scheduleToDelete = null;
     this.exhibitorToDelete = null;
+    this.speakerToDelete = null;
     this.informationToDelete = null;
   }
 
@@ -3219,6 +3243,43 @@ export class EventSetupComponent implements OnInit {
       this.aboutDescription = aboutData.description;
       this.editAboutContent = false;
     }
+  }
+
+  openAddSpeakersModal() {
+    this.editModeSpeaker = false;
+    this.editingSpeaker = null;
+    this.isAddSpeakersModalOpen = true;
+  }
+
+  closeAddSpeakersModal() {
+    this.isAddSpeakersModalOpen = false;
+    this.editModeSpeaker = false;
+    this.editingSpeaker = null;
+  }
+
+  onSpeakerSave(speakerData: any) {
+    if (this.editModeSpeaker && this.editingSpeaker) {
+      this.speakerService.updateSpeaker(this.editingSpeaker.id, speakerData);
+    } else {
+      this.speakerService.addSpeaker(this.eventId, speakerData);
+    }
+    this.loadSpeakers();
+    this.closeAddSpeakersModal();
+  }
+
+  loadSpeakers() {
+    this.speakers = this.speakerService.getSpeakersByEvent(this.eventId);
+  }
+
+  editSpeaker(speaker: Speaker) {
+    this.editModeSpeaker = true;
+    this.editingSpeaker = speaker;
+    this.isAddSpeakersModalOpen = true;
+  }
+
+  deleteSpeaker(id: string) {
+    this.speakerToDelete = id;
+    this.isDeleteModalOpen = true;
   }
 
   loadExhibitors() {

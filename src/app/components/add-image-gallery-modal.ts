@@ -173,7 +173,7 @@ import { GalleryImage } from "../services/image-gallery.service";
                       <img
                         [src]="image"
                         alt="Product image preview"
-                        class="w-24 h-24 object-cover rounded-[4px]"
+                        class="w-24 h-24 object-cover rounded-[4px] border-2 border-[#E9EBEC]"
                       />
                       <!-- Delete Button -->
                       <button
